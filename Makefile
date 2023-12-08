@@ -8,8 +8,8 @@ shared:
 
 perftest:
 	gcc -O0 main.c stack.c -o test
-	@./test
+	@./test 1024
 	gcc -O2 main.c stack.c -o test
-	@./test
+	@./test 1024
 	@rm -f test
 
