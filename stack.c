@@ -71,3 +71,12 @@ int stack_pop(struct Stack* stack, void* element, size_t elementsize){
 	return -1;
 }
 
+int stack_peek(struct Stack* stack, void* element, size_t elementsize){
+	if (stack->size < elementsize) return -1;
+	if (stack->type == LIFO)
+		memcpy(element, stack->bptr, elementsize);
+	else if (stack->type == FIFO)
+		memcpy(element, stack->sptr - elementsize, elementsize);
+	return 0;
+}
+

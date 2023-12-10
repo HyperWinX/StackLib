@@ -20,6 +20,10 @@ int popped_val;
 // Pop value. Function accepts same arguments as stack_push(). 
 retcode = stack_pop(&stack, &popped_val, sizeof(int));
 if (retcode != 0) return -1;
+int peeked_val
+//Peek value. Same arguments.
+retcode = stack_peek(&stack, &peeked_val, sizeof(int));
+if (retcode != 0) return -1;
 }  
 ```
 For FIFO stack usage is just the same, but instead of stack_lifo_new() use stack_fifo_new().
