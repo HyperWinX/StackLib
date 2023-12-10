@@ -8,22 +8,26 @@ int main(){
 // Create empty stack struct  
 struct Stack stack;  
 // Initialize struct, pass address of struct object and size of stack  
-int retcode = stack_lifo_new(&stack, 1024);   
+int retcode = stack_lifo_new(&stack, 4);   
 if (retcode != 0) return -1;
 // This is example value  
 int temp_value_to_push = 5;  
 // Push value to stack, function accepts address of stack object, address of your object you want to push, and size of this object
 retcode = stack_push(&stack, & temp_value_to_push, sizeof(int));  
-if (retcode != 0) return -1;  
-// Create object for popping value from stack
-int popped_val;
-// Pop value. Function accepts same arguments as stack_push(). 
-retcode = stack_pop(&stack, &popped_val, sizeof(int));
 if (retcode != 0) return -1;
-int peeked_val
-//Peek value. Same arguments.
+// If 1 - stack is full. If 0 - opposite.
+int stack_is_full = is_full(&stack);
+int peeked_val;
+// Peek value. Function accepts same arguments as stack_push()
 retcode = stack_peek(&stack, &peeked_val, sizeof(int));
 if (retcode != 0) return -1;
+// Create object for popping value from stack
+int popped_val;
+// Pop value. Same arguments.
+retcode = stack_pop(&stack, &popped_val, sizeof(int));
+if (retcode != 0) return -1;
+// If 1 - stack is empty. If 0 - opposite. 
+int stack_is_empty = is_empty(&stack);
 }  
 ```
 For FIFO stack usage is just the same, but instead of stack_lifo_new() use stack_fifo_new().
