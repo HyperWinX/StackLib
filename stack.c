@@ -90,3 +90,8 @@ int is_full(struct Stack* stack){
 		return 1;
 	return 0;
 }
+
+void stack_destroy(struct Stack* stack){
+	free(stack->srcptr);
+	memset(stack, 0x00, sizeof(struct Stack));
+}
