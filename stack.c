@@ -47,7 +47,7 @@ int stack_fifo_new(struct Stack* stack, size_t initial_size){
 
 int stack_push(struct Stack* stack, void* element, size_t elementsize){
 	if (stack->allocated - stack->size < elementsize) return -1;
-	stack->bptr -= elementsize;
+	stack->sptr -= elementsize;
 	memcpy(stack->bptr, element, elementsize);
 	stack->size += elementsize;
 	return 0;
@@ -56,16 +56,16 @@ int stack_push(struct Stack* stack, void* element, size_t elementsize){
 int stack_pop(struct Stack* stack, void* element, size_t elementsize){
 	if (stack->size < elementsize) return -1;
 	if (stack->type == LIFO){
-		memcpy(element, stack->bptr, elementsize);
-        	stack->bptr += elementsize;
+		memcpy(element, stack->sptr, elementsize);
+        	stack->sptr += elementsize;
         	stack->size -= elementsize;
         	return 0;
 	}
     	else if (stack->type == FIFO){
         	memcpy(element, stack->sptr - elementsize, elementsize);
         	stack->size -= elementsize;
-		stack->bptr += elementsize;
-        	smemcpy((char*)stack->bptr, (char*)stack->bptr - elementsize, stack->size);
+		stack->sptr += elementsize;
+        	smemcpy((char*)stack->sptr, (char*)stack->sptr - elementsize, stack->size);
 		return 0;
     	} 
 	return -1;
@@ -74,7 +74,7 @@ int stack_pop(struct Stack* stack, void* element, size_t elementsize){
 int stack_peek(struct Stack* stack, void* element, size_t elementsize){
 	if (stack->size < elementsize) return -1;
 	if (stack->type == LIFO)
-		memcpy(element, stack->bptr, elementsize);
+		memcpy(element, stack->sptr, elementsize);
 	else if (stack->type == FIFO)
 		memcpy(element, stack->sptr - elementsize, elementsize);
 	return 0;

@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
 		if (num != arr[numcount - i - 1]) stack_failures++;
 	}
 	lverification_time = clock();
-	free(stack.srcptr);
+	stack_destroy(&stack);
 	printf("Testing FIFO stack\n");
 	printf("Initializing stack\n");
 	stack_lifo_new(&stack, stack_sz);
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 		stack_pop(&stack, &num, sizeof(int));
 		if (num != arr[(numcount) - i - 1]) stack_failures++;
 	}
-	free(stack.srcptr);
+	stack_destroy(&stack);
 	stack_lifo_new(&stack, 4);
 	int val = rand();
 	if (is_empty(&stack)) is_empty_success = 1;
