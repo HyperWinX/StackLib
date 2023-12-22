@@ -9,11 +9,6 @@ enum StackType{
 	FIFO=1
 };
 
-void dmp(struct Stack* stack){
-	for (int i = 0; i < stack->size; i++) printf("%d\n", *((char*)stack->bptr + i));
-	printf("\n");
-}
-
 void smemcpy(char* dst, char* src, size_t n){
 	if (n % 4 != 0)
 		while(n--) *dst++ = *src++;
