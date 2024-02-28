@@ -43,7 +43,7 @@ int stack_fifo_new(struct Stack* stack, size_t initial_size){
 int stack_push(struct Stack* stack, void* element, size_t elementsize){
 	if (stack->allocated - stack->size < elementsize) return -1;
 	stack->sptr -= elementsize;
-	memcpy(stack->bptr, element, elementsize);
+	memcpy(stack->sptr, element, elementsize);
 	stack->size += elementsize;
 	return 0;
 }
@@ -81,7 +81,7 @@ int is_empty(struct Stack* stack){
 	return 0;
 }
 int is_full(struct Stack* stack){
-	if (stack->sptr - stack->bptr == stack->allocated)
+	if (stack->bptr - stack->sptr == stack->allocated)
 		return 1;
 	return 0;
 }

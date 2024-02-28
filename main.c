@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
 	clock_t start, end, lstack_init, fstack_init, rnd_gen, lpush_time, fpush_time, lverification_time, fverification_time;
 	double cputime;
 	int is_empty_success, is_full_success, peek_success;
-	uint64_t stack_failures = 0;
+	uint64_t lifo_failures = 0, fifo_failures = 0;
 	start = clock();
 	printf("Testing LIFO stack\n");
 	printf("Initializing stack\n");
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
 	for (int i = 0; i < numcount; i++){
 		int num;
 		stack_pop(&stack, &num, sizeof(int));
-		if (num != arr[numcount - i - 1]) stack_failures++;
+		if (num != arr[numcount - i - 1]) lifo_failures++;
 	}
 	lverification_time = clock();
 	stack_destroy(&stack);
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 	for (int i = 0; i < numcount; i++){
 		int num;
 		stack_pop(&stack, &num, sizeof(int));
-		if (num != arr[(numcount) - i - 1]) stack_failures++;
+		if (num != arr[(numcount) - i - 1]) fifo_failures++;
 	}
 	stack_destroy(&stack);
 	stack_lifo_new(&stack, 4);
@@ -79,10 +79,12 @@ int main(int argc, char *argv[]){
 	printf("Random numbers count:   %d\n", numcount);
 	printf("LIFO stack push time:   %fs\n", ((double)(lpush_time - rnd_gen)) / CLOCKS_PER_SEC);
 	printf("Verification time:      %fs\n", ((double)(lverification_time - lpush_time)) / CLOCKS_PER_SEC);
+	printf("Total failures:         %lu\n", lifo_failures);
 	printf("FIFO stack init time:   %fs\n", ((double)(fstack_init - lverification_time)) / CLOCKS_PER_SEC);
 	printf("Size of FIFO stack:     %dMB\n", stack_sz/1024/1024);
 	printf("FIFO stack push time:   %fs\n", ((double)(fpush_time - fstack_init)) / CLOCKS_PER_SEC);
 	printf("Verification time:      %fs\n", ((double)(end - fpush_time)) / CLOCKS_PER_SEC);
+	printf("Total failures:         %lu\n", fifo_failures);
 	printf("IsEmpty success:        %s\n", is_empty_success == 1 ? "Yes" : "No");
 	printf("IsFull success:         %s\n", is_full_success == 1 ? "Yes" : "No");
 	printf("Peek() success:         %s\n", peek_success == 1 ? "Yes" : "No");
